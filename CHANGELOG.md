@@ -6,5 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 ## Added
 - @javierfh03 - Develop get cron jobs in crontab manager with unit tests.
+- @javierfh03 - Develop insert cron jobs in crontab manager with unit tests.
 
 [Unreleased]: https://github.com/Lagatrix/crontab_lib.git

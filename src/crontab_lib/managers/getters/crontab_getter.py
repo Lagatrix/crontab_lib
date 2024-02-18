@@ -13,7 +13,7 @@ class CrontabGetter:
         Args:
             command_manager: To make commands in the shell.
         """
-        self.command_manager = command_manager
+        self.__command_manager = command_manager
 
     async def get_cron_jobs(self) -> list[CronJob]:
         """Ger cron jobs from the crontab file.
@@ -25,7 +25,7 @@ class CrontabGetter:
             CommandError: If the command return an unknown exit code.
         """
         crontab_list: list[CronJob] = []
-        data_list: list[str] = await self.command_manager.execute_command('crontab -l', False)
+        data_list: list[str] = await self.__command_manager.execute_command('/bin/crontab -l', False)
 
         for data_row in data_list:
             if data_row[0] != '#':
@@ -41,7 +41,7 @@ class CrontabGetter:
             If the user has a crontab file.
         """
         try:
-            await self.command_manager.execute_command('crontab -l', False)
+            await self.__command_manager.execute_command('/bin/crontab -l', False)
         except CommandError:
             return False
         return True

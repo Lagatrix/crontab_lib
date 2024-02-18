@@ -5,7 +5,7 @@ from unittest import mock
 from shell_executor_lib import CommandManager, CommandError
 
 from crontab_lib.managers.getters import CrontabGetter
-from tests.mock_crontab_lib import mock_command_executor_method, mock_crontab_file, mock_cronjob_list
+from tests.mock_crontab_lib import mock_command_executor_method, mock_crontab_file, mock_entity_cronjob_list
 
 
 class TestCrontabGetter(unittest.IsolatedAsyncioTestCase):
@@ -18,7 +18,7 @@ class TestCrontabGetter(unittest.IsolatedAsyncioTestCase):
     async def test_get_cron_jobs(self) -> None:
         """Test correctly functioning of command manager when get cron jobs in crontab file."""
         with mock.patch(mock_command_executor_method, return_value=mock_crontab_file):
-            self.assertEqual(await self.crontab_getter.get_cron_jobs(), mock_cronjob_list)
+            self.assertEqual(await self.crontab_getter.get_cron_jobs(), mock_entity_cronjob_list)
 
     async def test_user_has_crontab_file(self) -> None:
         """Test correctly functioning of command manager when check if user has a crontab file."""
