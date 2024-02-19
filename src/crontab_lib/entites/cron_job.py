@@ -21,6 +21,14 @@ class CronJob:
     month: str = "*"
     day_of_week: str = "*"
 
+    def format_to_use_in_sed(self) -> str:
+        """This method returns the string representation of the cron job to be used in the sed command.
+
+        Returns:
+            The cron job formatted.
+        """
+        return str(self).replace('/', '\\/').replace('*', '\\*')
+
     def __str__(self) -> str:
         """This method returns the string representation of the cron job."""
         return f"{self.minute} {self.hour} {self.day_of_month} {self.month} {self.day_of_week} {self.command}"

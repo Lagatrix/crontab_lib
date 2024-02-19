@@ -17,3 +17,10 @@ class TestCronJob(unittest.TestCase):
         """Test the string representation of the cron job."""
         self.assertEqual(str(self.simple_cron_job), "0 3 * * * tar -czf /backup/ex.tar.gz /home/")
         self.assertEqual(str(self.complex_cron_job), "*/15 8-17 1-15 1,6 1-5 tar -czf /backup/ex.tar.gz /home/")
+
+    def test_format_cron(self) -> None:
+        """Test the format for sed command of the cron job."""
+        self.assertEqual(self.simple_cron_job.format_to_use_in_sed(),
+                         r"0 3 \* \* \* tar -czf \/backup\/ex.tar.gz \/home\/")
+        self.assertEqual(self.complex_cron_job.format_to_use_in_sed(),
+                         r"\*\/15 8-17 1-15 1,6 1-5 tar -czf \/backup\/ex.tar.gz \/home\/")
