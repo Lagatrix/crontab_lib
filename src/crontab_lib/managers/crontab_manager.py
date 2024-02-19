@@ -2,6 +2,7 @@
 from shell_executor_lib import CommandManager, CommandError
 
 from crontab_lib import CronJob, NonexistentCrontabFileError, InvalidCronFormatError
+from crontab_lib.managers.eliminators import CrontabEliminator
 from crontab_lib.managers.getters import CrontabGetter
 from crontab_lib.managers.inserters import CrontabInserter
 from crontab_lib.managers.modifiers import CrontabModifier
@@ -20,6 +21,7 @@ class CrontabManager:
         self.__crontab_inserter: CrontabInserter = CrontabInserter(command_manager)
         self.__crontab_getter: CrontabGetter = CrontabGetter(command_manager)
         self.__crontab_modifier: CrontabModifier = CrontabModifier(command_manager)
+        self.__crontab_eliminator: CrontabEliminator = CrontabEliminator(command_manager)
 
     async def get_cron_jobs(self) -> list[CronJob]:
         """Get the cron jobs from the crontab file.
@@ -76,3 +78,17 @@ class CrontabManager:
             if "errors in crontab file" in command_error.response:
                 raise InvalidCronFormatError(str(new_cron_job))
             raise command_error
+
+    async def delete_cron_job(self, cron_job: CronJob) -> None:
+        """Delete a cron job from the crontab file.
+
+        Args:
+            cron_job: The cron job to be deleted.
+
+        Raises:
+            NonexistentCrontabFileError: If the user doesn't have a crontab file.
+            CommandError: If the exit code is not unexpected.
+        """
+        if not await self.__crontab_getter.user_has_crontab_file():
+            raise NonexistentCrontabFileError(self.__user)
+        await self.__crontab_eliminator.delete_cron_job(cron_job.format_to_use_in_sed())
