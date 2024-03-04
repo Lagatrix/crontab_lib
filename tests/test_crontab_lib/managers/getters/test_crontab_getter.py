@@ -25,6 +25,11 @@ class TestCrontabGetter(unittest.IsolatedAsyncioTestCase):
         with mock.patch(mock_command_executor_method, return_value=mock_crontab_file):
             self.assertEqual(await self.crontab_getter.user_has_crontab_file(), True)
 
+    async def test_get_empty_crontab_file(self) -> None:
+        """Test correctly functioning of command manager when get cron jobs in empty crontab file."""
+        with mock.patch(mock_command_executor_method, return_value=[]):
+            self.assertEqual(await self.crontab_getter.get_cron_jobs(), [])
+
     async def test_user_has_not_crontab_file(self) -> None:
         """Test correctly functioning of command manager when check if user hasn't a crontab file."""
         with mock.patch(mock_command_executor_method, side_effect=CommandError(1, "crontab: no crontab for augusto")):

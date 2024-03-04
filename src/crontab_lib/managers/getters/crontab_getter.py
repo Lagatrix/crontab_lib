@@ -27,6 +27,9 @@ class CrontabGetter:
         crontab_list: list[CronJob] = []
         data_list: list[str] = await self.__command_manager.execute_command('/bin/crontab -l', False)
 
+        if len(data_list) == 0:
+            return crontab_list
+
         for data_row in data_list:
             if data_row[0] != '#':
                 data: list[str] = data_row.split(" ")
