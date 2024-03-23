@@ -1,7 +1,7 @@
 [project]
 name = "crontab_lib"
-version = "0.1.0"
-description = "This library manage crontab asinconiously"
+version = "0.1.1"
+description = "This library manage crontab events asynchronously"
 
 maintainers = [
     { name = "Francisco Javier Fraga Hernández", email = "fcojavierfraga@tutanota.com" }
