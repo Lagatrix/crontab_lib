@@ -24,4 +24,4 @@ class CrontabEliminator:
             CommandError: If the exit code is not unexpected.
         """
         await self.__command_manager.execute_command(
-            f"( crontab -l | sed '{cron_job}'; ) | crontab -", False)
+            f"( crontab -l | sed '/{cron_job}/d'; ) | crontab -", False)

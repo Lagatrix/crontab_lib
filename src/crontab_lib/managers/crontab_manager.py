@@ -72,8 +72,7 @@ class CrontabManager:
         try:
             if not await self.__crontab_getter.user_has_crontab_file():
                 raise NonexistentCrontabFileError(self.__user)
-            await self.__crontab_modifier.modify_cron_job(new_cron_job.format_to_use_in_sed(),
-                                                          old_cron_job.format_to_use_in_sed())
+            await self.__crontab_modifier.modify_cron_job(str(new_cron_job), old_cron_job.format_to_use_in_sed())
         except CommandError as command_error:
             if "errors in crontab file" in command_error.response:
                 raise InvalidCronFormatError(str(new_cron_job))

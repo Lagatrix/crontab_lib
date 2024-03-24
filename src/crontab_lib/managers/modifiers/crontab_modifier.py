@@ -23,5 +23,5 @@ class CrontabModifier:
         Raises:
             CommandError: If the exit code is not unexpected.
         """
-        await self.__command_manager.execute_command(f'(/bin/crontab -l | /bin/sed \'{old_cron_job}/d\'; '
+        await self.__command_manager.execute_command(f'(/bin/crontab -l | /bin/sed \'/{old_cron_job}/d\'; '
                                                      f'/bin/echo \'{new_cron_job}\') | /bin/crontab -',  False)
